@@ -1,4 +1,4 @@
-package com.yusril.storyapp.core.ui
+package com.yusril.storyapp.core.presentation
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
