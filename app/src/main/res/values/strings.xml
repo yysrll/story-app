@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Story App</string>
+    <string name="from">from</string>
+    <string name="dev_name">Yusril</string>
 </resources>
