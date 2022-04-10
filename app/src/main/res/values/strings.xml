@@ -2,4 +2,11 @@
     <string name="app_name">Story App</string>
     <string name="from">from</string>
     <string name="dev_name">Yusril</string>
+    <string name="on_boarding_title_1">Bagikan Cerita Anda</string>
+    <string name="on_boarding_description_1">Sebarkan keceriaan melalui cerita yang anda bagikan</string>
+    <string name="start_now">Mulai Sekarang</string>
+    <string name="on_boarding_title_2">Mudah Digunakan</string>
+    <string name="on_boarding_description_2">Dilengkapi dengan fitur unggah cerita dan melihat cerita sebelumnya</string>
+    <string name="on_boarding_title_3">Jelajahi Dalam Berbagai Bahasa</string>
+    <string name="on_boarding_description_3">Tersedia dalam Bahasa Indonesia dan Bahasa Inggris</string>
 </resources>
