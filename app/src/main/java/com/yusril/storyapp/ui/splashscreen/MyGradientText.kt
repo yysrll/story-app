@@ -20,7 +20,7 @@ class MyGradientText : AppCompatTextView {
 
         paint.shader = LinearGradient(0F, 0F, width.toFloat(), height.toFloat(),
             ContextCompat.getColor(context, R.color.yellow),
-            ContextCompat.getColor(context, R.color.purple),
+            ContextCompat.getColor(context, R.color.purple_900),
             Shader.TileMode.CLAMP
         )
     }

@@ -44,7 +44,7 @@ class MyLogo : View {
         borderPaint.strokeWidth = 30F
         borderPaint.shader = LinearGradient(0F, 100F, 100F, 0F,
             ContextCompat.getColor(context, R.color.yellow),
-            ContextCompat.getColor(context, R.color.purple),
+            ContextCompat.getColor(context, R.color.purple_900),
             Shader.TileMode.CLAMP
         )
         canvas?.drawRoundRect(0F, 0F, 100F, 100F, 50F, 50F, borderPaint)

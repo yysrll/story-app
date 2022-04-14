@@ -165,13 +165,13 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/line_inactive" />
 
-    <Button
+    <com.yusril.storyapp.ui.customview.MyButton
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:alpha="0"
-        android:backgroundTint="@color/purple"
+        android:backgroundTint="@color/purple_900"
         android:text="@string/start_now"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Window
 import com.yusril.storyapp.R
 import com.yusril.storyapp.databinding.ActivityOnBoardingBinding
+import com.yusril.storyapp.ui.auth.LoginActivity
 
 class OnBoardingActivity : AppCompatActivity() {
 
@@ -17,6 +18,10 @@ class OnBoardingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityOnBoardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.button.setOnClickListener {
+            LoginActivity.start(this)
+        }
     }
 
 

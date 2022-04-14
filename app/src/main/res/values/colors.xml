@@ -10,5 +10,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="yellow">#fff6ba00</color>
-    <color name="purple">#ff82008f</color>
+    <color name="purple_900">#ff82008f</color>
+    <color name="purple_400">#9B3CA5</color>
 </resources>

@@ -3,9 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/active_border.xml" value="0.1665" />
+        <entry key="app/src/main/res/drawable/bg_button.xml" value="0.1665" />
+        <entry key="app/src/main/res/drawable/bg_button_disable.xml" value="0.1665" />
+        <entry key="app/src/main/res/drawable/bg_button_outline.xml" value="0.1665" />
         <entry key="app/src/main/res/drawable/bg_gradient.xml" value="0.1775" />
+        <entry key="app/src/main/res/drawable/border.xml" value="0.1665" />
+        <entry key="app/src/main/res/drawable/ic_eye.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_eye_active.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/inactive_border.xml" value="0.1665" />
         <entry key="app/src/main/res/drawable/line_active.xml" value="0.2805" />
         <entry key="app/src/main/res/drawable/line_inactive.xml" value="0.1705" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_on_boarding.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.25" />
       </map>
