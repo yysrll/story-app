@@ -6,6 +6,7 @@ import com.yusril.storyapp.core.data.remote.response.LoginResponse
 import com.yusril.storyapp.core.data.remote.response.LoginResult
 import com.yusril.storyapp.core.data.remote.response.ResultResponse
 import com.yusril.storyapp.core.vo.Resource
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,17 +18,18 @@ class RemoteDataSource private constructor(
     fun register(name: String, username: String, password: String) : LiveData<Resource<ResultResponse>>
     {
         val registerResult = MutableLiveData<Resource<ResultResponse>>()
+        registerResult.value = Resource.loading()
         apiService.register(name, username, password).enqueue(object : Callback<ResultResponse>
         {
             override fun onResponse(
                 call: Call<ResultResponse>,
                 response: Response<ResultResponse>
             ) {
-                registerResult.value = Resource.loading()
                 if (response.isSuccessful) {
                     registerResult.value = Resource.success(response.body())
                 } else {
-                    registerResult.value = Resource.error(response.body()?.message)
+                    val errorMsg = JSONObject(response.errorBody()?.string()!!)
+                    registerResult.value = Resource.error(errorMsg.getString("message"))
                 }
             }
 
@@ -43,17 +45,18 @@ class RemoteDataSource private constructor(
     fun login(username: String, password: String) : LiveData<Resource<LoginResult>>
     {
         val loginResult = MutableLiveData<Resource<LoginResult>>()
+        loginResult.value = Resource.loading()
         apiService.login(username, password).enqueue(object : Callback<LoginResponse>
         {
             override fun onResponse(
                 call: Call<LoginResponse>,
                 response: Response<LoginResponse>
             ) {
-                loginResult.value = Resource.loading()
                 if (response.isSuccessful) {
                     loginResult.value = Resource.success(response.body()?.loginResult)
                 } else {
-                    loginResult.value = Resource.error(response.body()?.message)
+                    val errorMsg = JSONObject(response.errorBody()?.string()!!)
+                    loginResult.value = Resource.error(errorMsg.getString("message"))
                 }
             }
 

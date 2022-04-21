@@ -3,6 +3,8 @@ package com.yusril.storyapp.ui.customview
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -38,5 +40,19 @@ open class MyEditText : AppCompatEditText, View.OnTouchListener {
     private fun init() {
         border = ContextCompat.getDrawable(context, R.drawable.border) as Drawable
         setOnTouchListener(this)
+        addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // Nothing
+            }
+
+            override fun onTextChanged(s: CharSequence, p1: Int, p2: Int, p3: Int) {
+                error = if (s.isEmpty()) resources.getString(R.string.empty_field) else null
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                // Nothing
+            }
+
+        })
     }
 }
