@@ -12,12 +12,19 @@ import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.yusril.storyapp.R
+import com.yusril.storyapp.core.data.local.UserPreferences
 import com.yusril.storyapp.core.presentation.ViewModelFactory
 import com.yusril.storyapp.core.vo.Status
 import com.yusril.storyapp.databinding.ActivityLoginBinding
+import com.yusril.storyapp.ui.main.MainActivity
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
@@ -79,17 +86,18 @@ class LoginActivity : AppCompatActivity() {
             when(it.status) {
                 Status.LOADING -> {
                     showLoading(true)
-                    Log.d("LoginResult", "Loading")
                 }
                 Status.ERROR -> {
                     showLoading(false)
                     Toast.makeText(this, "error, ${it.message}", Toast.LENGTH_SHORT).show()
-                    Log.d("LoginResult", "error, ${it.message}")
                 }
                 Status.SUCCESS -> {
                     showLoading(false)
                     Toast.makeText(this, "success, ${it.data?.name}", Toast.LENGTH_SHORT).show()
-                    Log.d("LoginResult", "success")
+                    it.data?.let { user ->
+                        viewModel.setNewUser(user)
+                        MainActivity.start(this, user)
+                    }
                 }
             }
         }
@@ -121,7 +129,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        val factory = ViewModelFactory.getInstance()
+        val factory = ViewModelFactory.getInstance(UserPreferences.getInstance(dataStore))
         viewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
     }
 

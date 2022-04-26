@@ -12,12 +12,17 @@ import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.yusril.storyapp.R
+import com.yusril.storyapp.core.data.local.UserPreferences
 import com.yusril.storyapp.core.presentation.ViewModelFactory
 import com.yusril.storyapp.core.vo.Status
 import com.yusril.storyapp.databinding.ActivityRegisterBinding
 
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
@@ -110,7 +115,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        val factory = ViewModelFactory.getInstance()
+        val factory = ViewModelFactory.getInstance(UserPreferences.getInstance(dataStore))
         viewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
     }
 

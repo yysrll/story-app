@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.yusril.storyapp.core.data.remote.response.LoginResponse
 import com.yusril.storyapp.core.data.remote.response.LoginResult
 import com.yusril.storyapp.core.data.remote.response.ResultResponse
+import com.yusril.storyapp.core.domain.model.User
+import com.yusril.storyapp.core.utils.DataMapper
 import com.yusril.storyapp.core.vo.Resource
 import org.json.JSONObject
 import retrofit2.Call
@@ -42,9 +44,9 @@ class RemoteDataSource private constructor(
     }
 
 
-    fun login(username: String, password: String) : LiveData<Resource<LoginResult>>
+    fun login(username: String, password: String) : LiveData<Resource<User>>
     {
-        val loginResult = MutableLiveData<Resource<LoginResult>>()
+        val loginResult = MutableLiveData<Resource<User>>()
         loginResult.value = Resource.loading()
         apiService.login(username, password).enqueue(object : Callback<LoginResponse>
         {
@@ -53,7 +55,11 @@ class RemoteDataSource private constructor(
                 response: Response<LoginResponse>
             ) {
                 if (response.isSuccessful) {
-                    loginResult.value = Resource.success(response.body()?.loginResult)
+                    loginResult.value = Resource.success(response.body()?.loginResult?.let {
+                        DataMapper.mapLoginResultToUser(
+                            it
+                        )
+                    })
                 } else {
                     val errorMsg = JSONObject(response.errorBody()?.string()!!)
                     loginResult.value = Resource.error(errorMsg.getString("message"))
