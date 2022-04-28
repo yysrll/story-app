@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -40,21 +41,23 @@ class MainActivity : AppCompatActivity() {
 
         initRecyclerView()
         initViewModel()
+        showLoading(true)
 
         val user = intent.getParcelableExtra<User>(USER)
         user?.token?.let { token ->
             storiesViewModel.getStories(token).observe(this){
                 when(it.status) {
                     Status.LOADING -> {
-                        Toast.makeText(this@MainActivity,
-                            "loading", Toast.LENGTH_SHORT).show()
+                        showLoading(true)
                     }
                     Status.SUCCESS -> {
                         it.data?.let { stories ->
                             storiesAdapter.setStories(stories)
                         }
+                        showLoading(false)
                     }
                     Status.ERROR -> {
+                        showLoading(false)
                         Toast.makeText(this@MainActivity,
                             "Failure: ${it.message}", Toast.LENGTH_SHORT).show()
                     }
@@ -100,6 +103,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    private fun showLoading(show: Boolean) {
+        binding.apply {
+            rvStory.visibility = if (show) View.GONE else View.VISIBLE
+            progressBar.visibility = if (show) View.VISIBLE else View.GONE
+            progressBar.apply {
+                if (show) showShimmer(true) else stopShimmer()
+            }
+        }
+
     }
 
     companion object {
