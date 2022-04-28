@@ -26,4 +26,5 @@
     <string name="logout_dialog_title">Logout of Story App?</string>
     <string name="logout_yes">Logout</string>
     <string name="cancel">Cancel</string>
+    <string name="description">Description</string>
 </resources>

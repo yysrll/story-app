@@ -26,6 +26,7 @@ import com.yusril.storyapp.core.vo.Status
 import com.yusril.storyapp.databinding.ActivityMainBinding
 import com.yusril.storyapp.ui.auth.AuthViewModel
 import com.yusril.storyapp.ui.auth.LoginActivity
+import com.yusril.storyapp.ui.detail.DetailActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class MainActivity : AppCompatActivity() {
@@ -78,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         }
         storiesAdapter.setOnItemClickCallback(object : StoriesAdapter.OnItemClickCallback{
             override fun onItemClicked(story: Story) {
-                Toast.makeText(this@MainActivity, story.name, Toast.LENGTH_LONG).show()
+                DetailActivity.start(this@MainActivity, story)
             }
 
         })
