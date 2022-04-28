@@ -10,7 +10,7 @@ object DataMapper {
         User(
             id = input.userId,
             name = input.name,
-            token = input.token
+            token = "Bearer ${input.token}"
         )
 
     fun mapStoryResponseToStory(input: List<StoryResponse>) : List<Story> {

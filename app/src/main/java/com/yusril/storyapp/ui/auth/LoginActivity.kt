@@ -93,7 +93,6 @@ class LoginActivity : AppCompatActivity() {
                 }
                 Status.SUCCESS -> {
                     showLoading(false)
-                    Toast.makeText(this, "success, ${it.data?.name}", Toast.LENGTH_SHORT).show()
                     it.data?.let { user ->
                         viewModel.setNewUser(user)
                         MainActivity.start(this, user)
