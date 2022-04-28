@@ -2,6 +2,7 @@ package com.yusril.storyapp.ui.main
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -97,9 +98,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.menu_logout -> {
-                authViewModel.deleteUser()
-                LoginActivity.start(this)
-                finish()
+                showLogoutDialog()
             }
         }
         return true
@@ -113,7 +112,19 @@ class MainActivity : AppCompatActivity() {
                 if (show) showShimmer(true) else stopShimmer()
             }
         }
+    }
 
+    private fun showLogoutDialog() {
+        val dialog = AlertDialog.Builder(this)
+        dialog.setTitle(getString(R.string.logout_dialog_title))
+        dialog.setPositiveButton(getString(R.string.logout_yes)) { _,_ ->
+            authViewModel.deleteUser()
+            LoginActivity.start(this)
+            finish()
+        }
+        dialog.setNegativeButton(getString(R.string.cancel)) { _,_ ->
+        }
+        dialog.show()
     }
 
     companion object {
