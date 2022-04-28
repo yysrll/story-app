@@ -23,8 +23,11 @@
     <string name="empty_field">Kolom ini harus diisi</string>
     <string name="logout">Keluar</string>
     <string name="date">13 jam yang lalu</string>
-    <string name="logout_dialog_title">Logout of Story App?</string>
-    <string name="logout_yes">Logout</string>
-    <string name="cancel">Cancel</string>
-    <string name="description">Description</string>
+    <string name="logout_dialog_title">Keluar dari Story App?</string>
+    <string name="logout_yes">Keluar</string>
+    <string name="cancel">Batal</string>
+    <string name="description">Deskripsi</string>
+    <string name="post">Unggah</string>
+    <string name="input_description">Masukkan deskripsi</string>
+    <string name="create_story_title">Tambah Cerita</string>
 </resources>

@@ -60,4 +60,10 @@ dependencies {
 
     // Shimmer Loading
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    // CameraX
+    def camerax_version = "1.1.0-beta03"
+    implementation "androidx.camera:camera-camera2:${camerax_version}"
+    implementation "androidx.camera:camera-lifecycle:${camerax_version}"
+    implementation "androidx.camera:camera-view:${camerax_version}"
 }

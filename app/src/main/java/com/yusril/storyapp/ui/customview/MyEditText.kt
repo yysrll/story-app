@@ -27,10 +27,10 @@ open class MyEditText : AppCompatEditText, View.OnTouchListener {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+//        textAlignment = View.TEXT_ALIGNMENT_VIEW_START
         background = border
         setPaddingRelative(48, 48, 48, 48)
-        maxLines = 1
+//        maxLines = 1
     }
 
     override fun onTouch(v: View?, event: MotionEvent): Boolean {

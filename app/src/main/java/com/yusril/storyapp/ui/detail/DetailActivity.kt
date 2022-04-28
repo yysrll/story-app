@@ -1,12 +1,10 @@
 package com.yusril.storyapp.ui.detail
 
 import android.app.Activity
-import android.app.Application
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
-import com.yusril.storyapp.R
 import com.yusril.storyapp.core.domain.model.Story
 import com.yusril.storyapp.databinding.ActivityDetailBinding
 

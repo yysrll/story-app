@@ -26,6 +26,7 @@ import com.yusril.storyapp.core.vo.Status
 import com.yusril.storyapp.databinding.ActivityMainBinding
 import com.yusril.storyapp.ui.auth.AuthViewModel
 import com.yusril.storyapp.ui.auth.LoginActivity
+import com.yusril.storyapp.ui.createstory.CreateStoryActivity
 import com.yusril.storyapp.ui.detail.DetailActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
@@ -44,6 +45,10 @@ class MainActivity : AppCompatActivity() {
         initRecyclerView()
         initViewModel()
         showLoading(true)
+
+        binding.buttonAddStory.setOnClickListener {
+            CreateStoryActivity.start(this)
+        }
 
         val user = intent.getParcelableExtra<User>(USER)
         user?.token?.let { token ->
