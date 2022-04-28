@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.yusril.storyapp.R
 import com.yusril.storyapp.core.domain.model.Story
 import com.yusril.storyapp.databinding.ItemStoryBinding
 
@@ -28,6 +29,7 @@ class StoriesAdapter: RecyclerView.Adapter<StoriesAdapter.RecyclerViewHolder>() 
             with(binding) {
                 Glide.with(itemView.context)
                     .load(story.photoUrl)
+                    .placeholder(R.drawable.image_placeholder)
                     .into(storyImage)
                 storyUserName.text = story.name
                 storyDate.text = story.createdAt
