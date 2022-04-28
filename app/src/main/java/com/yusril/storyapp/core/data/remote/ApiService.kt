@@ -2,10 +2,9 @@ package com.yusril.storyapp.core.data.remote
 
 import com.yusril.storyapp.core.data.remote.response.LoginResponse
 import com.yusril.storyapp.core.data.remote.response.ResultResponse
+import com.yusril.storyapp.core.data.remote.response.StoriesResponse
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ApiService
 {
@@ -23,4 +22,9 @@ interface ApiService
         @Field("email") email : String,
         @Field("password") password : String,
     ) : Call<LoginResponse>
+
+    @GET("stories")
+    fun getStories(
+        @Header("Authorization") token: String,
+    ): Call<StoriesResponse>
 }

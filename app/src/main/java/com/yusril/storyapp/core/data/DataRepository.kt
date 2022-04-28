@@ -5,6 +5,7 @@ import com.yusril.storyapp.core.data.local.LocalDataSource
 import com.yusril.storyapp.core.data.remote.RemoteDataSource
 import com.yusril.storyapp.core.data.remote.response.LoginResult
 import com.yusril.storyapp.core.data.remote.response.ResultResponse
+import com.yusril.storyapp.core.domain.model.Story
 import com.yusril.storyapp.core.domain.model.User
 import com.yusril.storyapp.core.domain.repository.IRepository
 import com.yusril.storyapp.core.vo.Resource
@@ -28,6 +29,8 @@ class DataRepository private constructor(
 
     override fun getOnBoardingKey(): LiveData<Boolean> = localDataSource.getOnBoardingKey()
     override suspend fun setOnBoardingKey(state: Boolean) = localDataSource.setOnBoardingKey(state)
+
+    override fun getStories(token: String): LiveData<Resource<List<Story>>> = remoteDataSource.getStories(token)
 
 
     companion object {

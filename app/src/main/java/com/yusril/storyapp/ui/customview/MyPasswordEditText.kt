@@ -32,7 +32,7 @@ class MyPasswordEditText : MyEditText {
         super.onDraw(canvas)
         setCompoundDrawablesWithIntrinsicBounds(null, null, eyeImage, null)
         hidePassword(isHidePassword)
-        }
+    }
 
     private fun init() {
         eyeImage = ContextCompat.getDrawable(context, R.drawable.ic_eye_active) as Drawable

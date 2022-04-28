@@ -3,6 +3,7 @@ package com.yusril.storyapp.core.domain.repository
 import androidx.lifecycle.LiveData
 import com.yusril.storyapp.core.data.remote.response.LoginResult
 import com.yusril.storyapp.core.data.remote.response.ResultResponse
+import com.yusril.storyapp.core.domain.model.Story
 import com.yusril.storyapp.core.domain.model.User
 import com.yusril.storyapp.core.vo.Resource
 
@@ -16,4 +17,6 @@ interface IRepository {
 
     fun getOnBoardingKey() : LiveData<Boolean>
     suspend fun setOnBoardingKey(state: Boolean)
+
+    fun getStories(token: String) : LiveData<Resource<List<Story>>>
 }

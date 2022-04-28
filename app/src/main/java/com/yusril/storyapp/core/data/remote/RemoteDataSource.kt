@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.yusril.storyapp.core.data.remote.response.LoginResponse
 import com.yusril.storyapp.core.data.remote.response.LoginResult
 import com.yusril.storyapp.core.data.remote.response.ResultResponse
+import com.yusril.storyapp.core.data.remote.response.StoriesResponse
+import com.yusril.storyapp.core.domain.model.Story
 import com.yusril.storyapp.core.domain.model.User
 import com.yusril.storyapp.core.utils.DataMapper
 import com.yusril.storyapp.core.vo.Resource
@@ -72,6 +74,32 @@ class RemoteDataSource private constructor(
 
         })
         return loginResult
+    }
+
+    fun getStories(token: String) : LiveData<Resource<List<Story>>> {
+        val storiesResult = MutableLiveData<Resource<List<Story>>>()
+        storiesResult.value = Resource.loading()
+        apiService.getStories(token).enqueue(object : Callback<StoriesResponse> {
+            override fun onResponse(
+                call: Call<StoriesResponse>,
+                response: Response<StoriesResponse>
+            ) {
+                if (response.isSuccessful) {
+                    storiesResult.value = Resource.success(response.body()?.stories?.let {
+                        DataMapper.mapStoryResponseToStory(it)
+                    })
+                } else {
+                    val errorMsg = JSONObject(response.errorBody()?.string()!!)
+                    storiesResult.value = Resource.error(errorMsg.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<StoriesResponse>, t: Throwable) {
+                storiesResult.value = Resource.error(t.message)
+            }
+
+        })
+        return storiesResult
     }
 
 

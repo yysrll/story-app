@@ -30,7 +30,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         dataStore.edit {
             it[userIdKey] = newUser.id
             it[userNameKey] = newUser.name
-            it[tokenKey] = newUser.token
+            it[tokenKey] = "Bearer ${newUser.token}"
         }
     }
 

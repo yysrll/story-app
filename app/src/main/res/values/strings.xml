@@ -22,4 +22,5 @@
     <string name="have_an_account">Sudah punya akun?</string>
     <string name="empty_field">Kolom ini harus diisi</string>
     <string name="logout">Keluar</string>
+    <string name="date">13 jam yang lalu</string>
 </resources>
