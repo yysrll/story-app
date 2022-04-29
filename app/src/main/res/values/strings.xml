@@ -30,4 +30,5 @@
     <string name="post">Unggah</string>
     <string name="input_description">Masukkan deskripsi</string>
     <string name="create_story_title">Tambah Cerita</string>
+    <string name="choose_picture">Pilih Gambar</string>
 </resources>

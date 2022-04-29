@@ -3,6 +3,7 @@ package com.yusril.storyapp.ui.createstory
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.Intent.ACTION_GET_CONTENT
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -43,7 +44,16 @@ class CreateStoryActivity : AppCompatActivity() {
 
         binding.apply {
             buttonCamera.setOnClickListener { startTakePhoto() }
+            buttonGallery.setOnClickListener { startGallery() }
         }
+    }
+
+    private fun startGallery() {
+        val intent = Intent()
+        intent.action = ACTION_GET_CONTENT
+        intent.type = "image/*"
+        val chooser = Intent.createChooser(intent, getString(R.string.choose_picture))
+        launcherIntentGallery.launch(chooser)
     }
 
 
@@ -72,6 +82,17 @@ class CreateStoryActivity : AppCompatActivity() {
             val result = BitmapFactory.decodeFile(myFile.path)
             binding.imagePreview.setImageBitmap(result)
         }
+    }
+
+    private val launcherIntentGallery = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val selectedImg: Uri = result.data?.data as Uri
+            val myFile = uriToFile(selectedImg, this)
+            binding.imagePreview.setImageURI(selectedImg)
+        }
+
     }
 
     override fun onRequestPermissionsResult(
