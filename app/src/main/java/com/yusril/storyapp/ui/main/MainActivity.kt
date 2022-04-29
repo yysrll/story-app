@@ -46,11 +46,12 @@ class MainActivity : AppCompatActivity() {
         initViewModel()
         showLoading(true)
 
+        val user = intent.getParcelableExtra<User>(USER)
         binding.buttonAddStory.setOnClickListener {
-            CreateStoryActivity.start(this)
+            user?.let { user -> CreateStoryActivity.start(this, user) }
         }
 
-        val user = intent.getParcelableExtra<User>(USER)
+
         user?.token?.let { token ->
             storiesViewModel.getStories(token).observe(this){
                 when(it.status) {

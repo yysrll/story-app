@@ -3,6 +3,8 @@ package com.yusril.storyapp.core.data.remote
 import com.yusril.storyapp.core.data.remote.response.LoginResponse
 import com.yusril.storyapp.core.data.remote.response.ResultResponse
 import com.yusril.storyapp.core.data.remote.response.StoriesResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -27,4 +29,12 @@ interface ApiService
     fun getStories(
         @Header("Authorization") token: String,
     ): Call<StoriesResponse>
+
+    @Multipart
+    @POST("stories")
+    fun uploadStory(
+        @Header("Authorization") token: String,
+        @Part file: MultipartBody.Part,
+        @Part("description") description: RequestBody
+    ): Call<ResultResponse>
 }

@@ -58,5 +58,17 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:elevation="8dp"
+        app:layout_constraintLeft_toLeftOf="@id/button_post"
+        app:layout_constraintTop_toTopOf="@id/button_post"
+        app:layout_constraintRight_toRightOf="@id/button_post"
+        app:layout_constraintBottom_toBottomOf="@id/button_post"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

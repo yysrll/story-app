@@ -3,17 +3,22 @@ package com.yusril.storyapp.core.data.remote
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.yusril.storyapp.core.data.remote.response.LoginResponse
-import com.yusril.storyapp.core.data.remote.response.LoginResult
 import com.yusril.storyapp.core.data.remote.response.ResultResponse
 import com.yusril.storyapp.core.data.remote.response.StoriesResponse
 import com.yusril.storyapp.core.domain.model.Story
 import com.yusril.storyapp.core.domain.model.User
 import com.yusril.storyapp.core.utils.DataMapper
 import com.yusril.storyapp.core.vo.Resource
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 
 class RemoteDataSource private constructor(
     private val apiService: ApiService
@@ -100,6 +105,38 @@ class RemoteDataSource private constructor(
 
         })
         return storiesResult
+    }
+
+    fun uploadStory(token: String, file: File, description: String) : LiveData<Resource<ResultResponse>> {
+        val uploadResult = MutableLiveData<Resource<ResultResponse>>()
+        uploadResult.value = Resource.loading()
+        val desc = description.toRequestBody("text/plain".toMediaType())
+        val requestImg = file.asRequestBody("image/jpg".toMediaTypeOrNull())
+        val imgMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+            "photo",
+            file.name,
+            requestImg
+        )
+
+        apiService.uploadStory(token, imgMultipart, desc).enqueue(object : Callback<ResultResponse>{
+            override fun onResponse(
+                call: Call<ResultResponse>,
+                response: Response<ResultResponse>
+            ) {
+                if (response.isSuccessful) {
+                    uploadResult.value = Resource.success(response.body())
+                } else {
+                    val errorMsg = JSONObject(response.errorBody()?.string()!!)
+                    uploadResult.value = Resource.error(errorMsg.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResultResponse>, t: Throwable) {
+                uploadResult.value = Resource.error(t.message)
+            }
+        })
+
+        return uploadResult
     }
 
 

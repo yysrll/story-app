@@ -6,6 +6,7 @@ import com.yusril.storyapp.core.domain.model.Story
 import com.yusril.storyapp.core.domain.model.User
 import com.yusril.storyapp.core.domain.repository.IRepository
 import com.yusril.storyapp.core.vo.Resource
+import java.io.File
 
 class StoryInteractor(private val repository: IRepository) : StoryUseCase {
     override fun register(
@@ -24,4 +25,9 @@ class StoryInteractor(private val repository: IRepository) : StoryUseCase {
     override suspend fun setOnBoardingKey(state: Boolean) = repository.setOnBoardingKey(state)
 
     override fun getStories(token: String): LiveData<Resource<List<Story>>> = repository.getStories(token)
+    override fun uploadStory(
+        token: String,
+        file: File,
+        description: String
+    ): LiveData<Resource<ResultResponse>> = repository.uploadStory(token, file, description)
 }

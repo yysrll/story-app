@@ -1,11 +1,11 @@
 package com.yusril.storyapp.core.domain.repository
 
 import androidx.lifecycle.LiveData
-import com.yusril.storyapp.core.data.remote.response.LoginResult
 import com.yusril.storyapp.core.data.remote.response.ResultResponse
 import com.yusril.storyapp.core.domain.model.Story
 import com.yusril.storyapp.core.domain.model.User
 import com.yusril.storyapp.core.vo.Resource
+import java.io.File
 
 interface IRepository {
     fun register(name: String, email: String, password: String) : LiveData<Resource<ResultResponse>>
@@ -19,4 +19,5 @@ interface IRepository {
     suspend fun setOnBoardingKey(state: Boolean)
 
     fun getStories(token: String) : LiveData<Resource<List<Story>>>
+    fun uploadStory(token: String, file: File, description: String) : LiveData<Resource<ResultResponse>>
 }

@@ -3,12 +3,12 @@ package com.yusril.storyapp.core.data
 import androidx.lifecycle.LiveData
 import com.yusril.storyapp.core.data.local.LocalDataSource
 import com.yusril.storyapp.core.data.remote.RemoteDataSource
-import com.yusril.storyapp.core.data.remote.response.LoginResult
 import com.yusril.storyapp.core.data.remote.response.ResultResponse
 import com.yusril.storyapp.core.domain.model.Story
 import com.yusril.storyapp.core.domain.model.User
 import com.yusril.storyapp.core.domain.repository.IRepository
 import com.yusril.storyapp.core.vo.Resource
+import java.io.File
 
 class DataRepository private constructor(
     private val remoteDataSource: RemoteDataSource,
@@ -31,6 +31,11 @@ class DataRepository private constructor(
     override suspend fun setOnBoardingKey(state: Boolean) = localDataSource.setOnBoardingKey(state)
 
     override fun getStories(token: String): LiveData<Resource<List<Story>>> = remoteDataSource.getStories(token)
+    override fun uploadStory(
+        token: String,
+        file: File,
+        description: String
+    ): LiveData<Resource<ResultResponse>> = remoteDataSource.uploadStory(token, file, description)
 
 
     companion object {
