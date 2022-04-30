@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
 import com.yusril.storyapp.core.domain.model.Story
+import com.yusril.storyapp.core.utils.dateFormatter
 import com.yusril.storyapp.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
@@ -25,7 +26,7 @@ class DetailActivity : AppCompatActivity() {
                 .load(story?.photoUrl)
                 .into(detailImage)
             detailUserName.text = story?.name
-            detailDate.text = story?.createdAt
+            detailDate.text = story?.createdAt?.let { dateFormatter(it) }
             detailDescription.text = story?.description
         }
     }

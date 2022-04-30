@@ -10,5 +10,5 @@ fun dateFormatter(string: String) : String {
     inputFormatter.timeZone = TimeZone.getTimeZone("UTC")
 
     val dateParse = inputFormatter.parse(string) as Date
-    return SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.getDefault()).format(dateParse)
+    return SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault()).format(dateParse)
 }
