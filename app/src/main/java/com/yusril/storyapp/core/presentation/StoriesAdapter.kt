@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yusril.storyapp.R
 import com.yusril.storyapp.core.domain.model.Story
+import com.yusril.storyapp.core.utils.dateFormatter
 import com.yusril.storyapp.databinding.ItemStoryBinding
+import kotlin.collections.ArrayList
 
 class StoriesAdapter: RecyclerView.Adapter<StoriesAdapter.RecyclerViewHolder>() {
     private val listStories = ArrayList<Story>()
@@ -32,7 +34,7 @@ class StoriesAdapter: RecyclerView.Adapter<StoriesAdapter.RecyclerViewHolder>() 
                     .placeholder(R.drawable.image_placeholder)
                     .into(storyImage)
                 storyUserName.text = story.name
-                storyDate.text = story.createdAt
+                storyDate.text = dateFormatter(story.createdAt)
             }
         }
     }
