@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.app.ActivityOptionsCompat
 import com.bumptech.glide.Glide
 import com.yusril.storyapp.core.domain.model.Story
 import com.yusril.storyapp.core.utils.dateFormatter
@@ -42,7 +43,7 @@ class DetailActivity : AppCompatActivity() {
         fun start(context: Activity, story: Story) {
             val intent = Intent(context, DetailActivity::class.java)
             intent.putExtra(STORY, story)
-            context.startActivity(intent)
+            context.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(context).toBundle())
         }
     }
 }
