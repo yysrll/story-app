@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -106,6 +107,9 @@ class MainActivity : AppCompatActivity() {
         when(item.itemId) {
             R.id.menu_logout -> {
                 showLogoutDialog()
+            }
+            R.id.menu_language -> {
+                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
             }
         }
         return true
