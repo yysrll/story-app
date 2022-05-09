@@ -7,6 +7,8 @@ import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -82,11 +84,11 @@ class MyPasswordEditText : MyEditText {
         if (isHide) {
             eyeImage = ContextCompat.getDrawable(context, R.drawable.ic_eye) as Drawable
             setTextColor(ContextCompat.getColor(context, R.color.purple_500))
-            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            transformationMethod = PasswordTransformationMethod.getInstance()
         } else {
             eyeImage = ContextCompat.getDrawable(context, R.drawable.ic_eye_active) as Drawable
             setTextColor(ContextCompat.getColor(context, R.color.black))
-            inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            transformationMethod = HideReturnsTransformationMethod.getInstance()
         }
     }
 }
