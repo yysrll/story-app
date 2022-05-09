@@ -3,23 +3,25 @@ package com.yusril.storyapp.core.presentation
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yusril.storyapp.R
 import com.yusril.storyapp.core.domain.model.Story
+import com.yusril.storyapp.core.utils.MyDiffUtil
 import com.yusril.storyapp.core.utils.dateFormatter
 import com.yusril.storyapp.databinding.ItemStoryBinding
-import kotlin.collections.ArrayList
 
 class StoriesAdapter: RecyclerView.Adapter<StoriesAdapter.RecyclerViewHolder>() {
-    private val listStories = ArrayList<Story>()
+    private var listStories = emptyList<Story>()
     private var onItemClickCallback: OnItemClickCallback? = null
 
     @SuppressLint("NotifyDataSetChanged")
     fun setStories(items: List<Story>) {
-        listStories.clear()
-        listStories.addAll(items)
-        notifyDataSetChanged()
+        val diffUtil = MyDiffUtil(listStories, items)
+        val diffResult = DiffUtil.calculateDiff(diffUtil)
+        listStories = items
+        diffResult.dispatchUpdatesTo(this)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
