@@ -146,7 +146,9 @@ class RemoteDataSource private constructor(
 
         fun getInstance(service: ApiService) : RemoteDataSource =
             instance ?: synchronized(this) {
-                instance ?: RemoteDataSource(service)
+                instance ?: RemoteDataSource(service).also {
+                    instance = it
+                }
             }
     }
 }

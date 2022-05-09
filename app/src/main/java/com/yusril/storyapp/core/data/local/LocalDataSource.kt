@@ -19,7 +19,9 @@ class LocalDataSource private constructor(private val preferences: UserPreferenc
 
         fun getInstance(preferences: UserPreferences) : LocalDataSource {
             return instance ?: synchronized(this) {
-                instance ?: LocalDataSource(preferences)
+                instance ?: LocalDataSource(preferences).also {
+                    instance = it
+                }
             }
         }
     }

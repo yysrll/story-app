@@ -49,7 +49,7 @@ class CreateStoryActivity : AppCompatActivity() {
             title = getString(R.string.create_story_title)
         }
 
-        user = intent.getParcelableExtra(USER)!!
+        user = intent.getParcelableExtra<User>(USER) as User
         initViewModel()
 
         if (!allPermissionGranted()) {
