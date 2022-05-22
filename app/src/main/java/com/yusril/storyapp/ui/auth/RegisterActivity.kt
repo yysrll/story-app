@@ -115,7 +115,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        val factory = ViewModelFactory.getInstance(UserPreferences.getInstance(dataStore))
+        val factory = ViewModelFactory.getInstance(this, UserPreferences.getInstance(dataStore))
         viewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
     }
 

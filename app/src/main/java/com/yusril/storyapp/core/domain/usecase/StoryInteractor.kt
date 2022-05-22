@@ -1,6 +1,8 @@
 package com.yusril.storyapp.core.domain.usecase
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingData
+import com.yusril.storyapp.core.data.local.room.StoryItem
 import com.yusril.storyapp.core.data.remote.response.ResultResponse
 import com.yusril.storyapp.core.domain.model.Story
 import com.yusril.storyapp.core.domain.model.User
@@ -25,6 +27,8 @@ class StoryInteractor(private val repository: IRepository) : StoryUseCase {
     override suspend fun setOnBoardingKey(state: Boolean) = repository.setOnBoardingKey(state)
 
     override fun getStories(token: String): LiveData<Resource<List<Story>>> = repository.getStories(token)
+    override fun getStoriesWithPaging(token: String): LiveData<PagingData<StoryItem>> = repository.getStoriesWithPaging(token)
+
     override fun uploadStory(
         token: String,
         file: File,

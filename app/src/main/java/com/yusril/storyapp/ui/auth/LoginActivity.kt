@@ -6,14 +6,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
-import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
@@ -128,7 +126,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        val factory = ViewModelFactory.getInstance(UserPreferences.getInstance(dataStore))
+        val factory = ViewModelFactory.getInstance(this, UserPreferences.getInstance(dataStore))
         viewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
     }
 

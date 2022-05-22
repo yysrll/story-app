@@ -32,4 +32,5 @@
     <string name="create_story_title">Tambah Cerita</string>
     <string name="choose_picture">Pilih Gambar</string>
     <string name="upload_story_null">Silakan masukkan berkas gambar dan deskripsi terlebih dahulu</string>
+    <string name="retry">Try Again</string>
 </resources>

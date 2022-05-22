@@ -1,17 +1,16 @@
 package com.yusril.storyapp.ui.main
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -21,9 +20,9 @@ import com.yusril.storyapp.R
 import com.yusril.storyapp.core.data.local.UserPreferences
 import com.yusril.storyapp.core.domain.model.Story
 import com.yusril.storyapp.core.domain.model.User
+import com.yusril.storyapp.core.presentation.LoadingStateAdapter
 import com.yusril.storyapp.core.presentation.StoriesAdapter
 import com.yusril.storyapp.core.presentation.ViewModelFactory
-import com.yusril.storyapp.core.vo.Status
 import com.yusril.storyapp.databinding.ActivityMainBinding
 import com.yusril.storyapp.ui.auth.AuthViewModel
 import com.yusril.storyapp.ui.auth.LoginActivity
@@ -54,34 +53,24 @@ class MainActivity : AppCompatActivity() {
 
 
         user?.token?.let { token ->
+            Log.d("token", token)
             storiesViewModel.getStories(token).observe(this){
-                when(it.status) {
-                    Status.LOADING -> {
-                        showLoading(true)
-                    }
-                    Status.SUCCESS -> {
-                        it.data?.let { stories ->
-                            storiesAdapter.setStories(stories)
-                        }
-                        showLoading(false)
-                    }
-                    Status.ERROR -> {
-                        showLoading(false)
-                        Toast.makeText(this@MainActivity,
-                            "Failure: ${it.message}", Toast.LENGTH_SHORT).show()
-                    }
-                }
+                showLoading(false)
+                storiesAdapter.submitData(lifecycle, it)
+                Log.d(TAG, it.toString())
             }
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun initRecyclerView() {
         storiesAdapter = StoriesAdapter()
-        storiesAdapter.notifyDataSetChanged()
         binding.rvStory.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = storiesAdapter
+            adapter = storiesAdapter.withLoadStateFooter(
+                footer = LoadingStateAdapter{
+                    storiesAdapter.retry()
+                }
+            )
             setHasFixedSize(true)
         }
         storiesAdapter.setOnItemClickCallback(object : StoriesAdapter.OnItemClickCallback{
@@ -93,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        val factory = ViewModelFactory.getInstance(UserPreferences.getInstance(dataStore))
+        val factory = ViewModelFactory.getInstance(this, UserPreferences.getInstance(dataStore))
         authViewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
         storiesViewModel = ViewModelProvider(this, factory)[StoriesViewModel::class.java]
     }
@@ -139,6 +128,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+        var TAG: String = MainActivity::class.java.simpleName
         const val USER = "user"
         fun start(context: Activity, user: User) {
             val intent = Intent(context, MainActivity::class.java)

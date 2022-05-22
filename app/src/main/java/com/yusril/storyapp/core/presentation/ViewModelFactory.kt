@@ -1,5 +1,6 @@
 package com.yusril.storyapp.core.presentation
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.yusril.storyapp.core.data.local.UserPreferences
@@ -28,9 +29,12 @@ class ViewModelFactory private constructor(
         @Volatile
         private var instance : ViewModelFactory? = null
 
-        fun getInstance(references: UserPreferences) : ViewModelFactory =
+        fun getInstance(
+            context: Context,
+            references: UserPreferences
+        ) : ViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideUseCase(references))
+                instance ?: ViewModelFactory(Injection.provideUseCase(context, references))
             }
     }
 }
