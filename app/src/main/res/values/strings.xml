@@ -33,4 +33,5 @@
     <string name="choose_picture">Pilih Gambar</string>
     <string name="upload_story_null">Silakan masukkan berkas gambar dan deskripsi terlebih dahulu</string>
     <string name="retry">Try Again</string>
+    <string name="map">map</string>
 </resources>

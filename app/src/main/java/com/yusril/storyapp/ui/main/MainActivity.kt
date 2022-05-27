@@ -28,6 +28,7 @@ import com.yusril.storyapp.ui.auth.AuthViewModel
 import com.yusril.storyapp.ui.auth.LoginActivity
 import com.yusril.storyapp.ui.createstory.CreateStoryActivity
 import com.yusril.storyapp.ui.detail.DetailActivity
+import com.yusril.storyapp.ui.map.MapActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 class MainActivity : AppCompatActivity() {
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var authViewModel: AuthViewModel
     private lateinit var storiesViewModel: StoriesViewModel
     private lateinit var storiesAdapter: StoriesAdapter
+    private lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,13 +48,13 @@ class MainActivity : AppCompatActivity() {
         initViewModel()
         showLoading(true)
 
-        val user = intent.getParcelableExtra<User>(USER)
+        user = intent.getParcelableExtra<User>(USER) as User
         binding.buttonAddStory.setOnClickListener {
-            user?.let { user -> CreateStoryActivity.start(this, user) }
+            user.let { user -> CreateStoryActivity.start(this, user) }
         }
 
 
-        user?.token?.let { token ->
+        user.token.let { token ->
             Log.d("token", token)
             storiesViewModel.getStories(token).observe(this){
                 showLoading(false)
@@ -94,12 +96,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.menu_logout -> {
-                showLogoutDialog()
-            }
-            R.id.menu_language -> {
-                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
-            }
+            R.id.menu_map -> MapActivity.start(this, user)
+            R.id.menu_logout -> showLogoutDialog()
+            R.id.menu_language -> startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
         }
         return true
     }

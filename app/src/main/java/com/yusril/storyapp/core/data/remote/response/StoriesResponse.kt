@@ -29,4 +29,10 @@ data class StoryResponse(
 
     @SerializedName("createdAt")
     var createdAt : String,
+
+    @SerializedName("lat")
+    var lat : String,
+
+    @SerializedName("lon")
+    var lon : String,
 )

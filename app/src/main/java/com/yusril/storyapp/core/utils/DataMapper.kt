@@ -21,7 +21,6 @@ object DataMapper {
             description = input.description,
             photoUrl = input.photoUrl,
             createdAt = input.createdAt
-
         )
 
     fun mapStoryResponseToStory(input: List<StoryResponse>) : List<Story> {
@@ -32,7 +31,9 @@ object DataMapper {
                 name = it.name,
                 description = it.description,
                 photoUrl = it.photoUrl,
-                createdAt = it.createdAt
+                createdAt = it.createdAt,
+                lat = it.lat,
+                lon = it.lon
             )
             listStory.add(story)
         }
