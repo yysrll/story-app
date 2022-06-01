@@ -7,10 +7,12 @@ import android.content.Intent
 import android.content.Intent.ACTION_GET_CONTENT
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import android.location.Location
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,6 +23,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.yusril.storyapp.R
 import com.yusril.storyapp.core.data.local.UserPreferences
 import com.yusril.storyapp.core.domain.model.User
@@ -35,7 +39,10 @@ class CreateStoryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateStoryBinding
     private lateinit var viewModel: UploadStoryViewModel
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var user: User
+    private var lat: Float? = null
+    private var lon: Float? = null
     private var getFile: File? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +50,7 @@ class CreateStoryActivity : AppCompatActivity() {
         binding = ActivityCreateStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         showLoading(false)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -65,6 +73,7 @@ class CreateStoryActivity : AppCompatActivity() {
             buttonGallery.setOnClickListener { startGallery() }
             buttonPost.setOnClickListener { uploadStory() }
         }
+        getMyLastLocation()
     }
 
     private fun initViewModel() {
@@ -77,16 +86,17 @@ class CreateStoryActivity : AppCompatActivity() {
         val isValidInput = inputDesc.toString().isNotEmpty() && inputDesc != null
         if (getFile != null && isValidInput && binding.inputDescription.error == null) {
             val file = getFile as File
-            viewModel.uploadStory(user.token, file, inputDesc.toString()).observe(this){
+            viewModel.uploadStory(user.token, file, inputDesc.toString(), lat, lon).observe(this){
                 when(it.status) {
                     Status.LOADING -> showLoading(true)
                     Status.ERROR -> {
                         showLoading(false)
-                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "error: ${it.message}", Toast.LENGTH_SHORT).show()
                     }
                     Status.SUCCESS -> {
                         showLoading(false)
                         MainActivity.start(this, user)
+                        finish()
                     }
                 }
             }
@@ -175,6 +185,59 @@ class CreateStoryActivity : AppCompatActivity() {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
 
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
+                    // Precise location access granted.
+                    getMyLastLocation()
+                }
+                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
+                    // Only approximate location access granted.
+                    getMyLastLocation()
+                }
+                else -> {
+                    // No location access granted.
+                }
+            }
+        }
+
+    private fun checkPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            permission
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun getMyLastLocation() {
+        if     (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) &&
+            checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+        ) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    lat = location.latitude.toFloat()
+                    lon = location.longitude.toFloat()
+                    Log.d(TAG, "location ${lat.toString()} ${lon.toString()}")
+                } else {
+                    Toast.makeText(
+                        this,
+                        "location not found",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        } else {
+            requestPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+        }
+    }
+
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
@@ -182,6 +245,7 @@ class CreateStoryActivity : AppCompatActivity() {
     }
 
     companion object {
+        private const val TAG = "CreateStoryActivity"
         private val REQUIRED_PERMISSION = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSION = 10
         const val USER = "user"

@@ -32,6 +32,8 @@ class StoryInteractor(private val repository: IRepository) : StoryUseCase {
     override fun uploadStory(
         token: String,
         file: File,
-        description: String
-    ): LiveData<Resource<ResultResponse>> = repository.uploadStory(token, file, description)
+        description: String,
+        lat: Float?,
+        lon: Float?
+    ): LiveData<Resource<ResultResponse>> = repository.uploadStory(token, file, description, lat, lon)
 }

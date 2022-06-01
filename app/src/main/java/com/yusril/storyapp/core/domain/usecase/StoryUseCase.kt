@@ -22,5 +22,5 @@ interface StoryUseCase {
 
     fun getStories(token: String) : LiveData<Resource<List<Story>>>
     fun getStoriesWithPaging(token: String) : LiveData<PagingData<StoryItem>>
-    fun uploadStory(token: String, file: File, description: String) : LiveData<Resource<ResultResponse>>
+    fun uploadStory(token: String, file: File, description: String, lat: Float?, lon: Float?) : LiveData<Resource<ResultResponse>>
 }

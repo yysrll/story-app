@@ -141,7 +141,9 @@ class DataRepository private constructor(
     override fun uploadStory(
         token: String,
         file: File,
-        description: String
+        description: String,
+        lat: Float?,
+        lon: Float?
     ): LiveData<Resource<ResultResponse>> {
         val uploadResult = MutableLiveData<Resource<ResultResponse>>()
         uploadResult.value = Resource.loading()
@@ -153,7 +155,7 @@ class DataRepository private constructor(
             requestImg
         )
 
-        apiService.uploadStory(token, imgMultipart, desc).enqueue(object : Callback<ResultResponse>{
+        apiService.uploadStory(token, imgMultipart, desc, lat, lon).enqueue(object : Callback<ResultResponse>{
             override fun onResponse(
                 call: Call<ResultResponse>,
                 response: Response<ResultResponse>

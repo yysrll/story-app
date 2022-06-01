@@ -107,7 +107,7 @@ class RemoteDataSource private constructor(
         return storiesResult
     }
 
-    fun uploadStory(token: String, file: File, description: String) : LiveData<Resource<ResultResponse>> {
+    fun uploadStory(token: String, file: File, description: String, lat: Float?, lon: Float?) : LiveData<Resource<ResultResponse>> {
         val uploadResult = MutableLiveData<Resource<ResultResponse>>()
         uploadResult.value = Resource.loading()
         val desc = description.toRequestBody("text/plain".toMediaType())
@@ -118,7 +118,7 @@ class RemoteDataSource private constructor(
             requestImg
         )
 
-        apiService.uploadStory(token, imgMultipart, desc).enqueue(object : Callback<ResultResponse>{
+        apiService.uploadStory(token, imgMultipart, desc, lat, lon).enqueue(object : Callback<ResultResponse>{
             override fun onResponse(
                 call: Call<ResultResponse>,
                 response: Response<ResultResponse>

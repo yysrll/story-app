@@ -8,7 +8,7 @@ import com.yusril.storyapp.core.vo.Resource
 import java.io.File
 
 class UploadStoryViewModel(private val storyUseCase: StoryUseCase): ViewModel() {
-    fun uploadStory(token: String, file: File, description: String) : LiveData<Resource<ResultResponse>> {
-        return storyUseCase.uploadStory(token, file, description)
+    fun uploadStory(token: String, file: File, description: String, lat: Float?, lon: Float?) : LiveData<Resource<ResultResponse>> {
+        return storyUseCase.uploadStory(token, file, description, lat, lon)
     }
 }
