@@ -134,6 +134,7 @@ class LoginActivity : AppCompatActivity() {
         fun start(context: Activity?) {
             val intent = Intent(context, LoginActivity::class.java)
             context?.startActivity(intent)
+            context?.finish()
         }
     }
 }

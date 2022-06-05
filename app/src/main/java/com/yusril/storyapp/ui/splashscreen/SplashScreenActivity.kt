@@ -42,6 +42,7 @@ class SplashScreenActivity : AppCompatActivity() {
                         } else {
                             OnBoardingActivity.start(this)
                         }
+                        finish()
                     }
                 } else {
                     MainActivity.start(this, it)
