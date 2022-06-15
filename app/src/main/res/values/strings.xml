@@ -1,3 +1,37 @@
 <resources>
     <string name="app_name">Story App</string>
+    <string name="from">dari</string>
+    <string name="dev_name">Yusril</string>
+    <string name="on_boarding_title_1">Bagikan Cerita Anda</string>
+    <string name="on_boarding_description_1">Sebarkan keceriaan melalui cerita yang anda bagikan</string>
+    <string name="start_now">Mulai Sekarang</string>
+    <string name="on_boarding_title_2">Mudah Digunakan</string>
+    <string name="on_boarding_description_2">Dilengkapi dengan fitur unggah cerita dan melihat cerita sebelumnya</string>
+    <string name="on_boarding_title_3">Jelajahi Dalam Berbagai Bahasa</string>
+    <string name="on_boarding_description_3">Tersedia dalam Bahasa Indonesia dan Bahasa Inggris</string>
+    <string name="greeting">Halo, Selamat Malam!</string>
+    <string name="welcome">Selamat datang di aplikasi Story</string>
+    <string name="input_name">Masukkan nama</string>
+    <string name="input_password">Masukkan kata sandi</string>
+    <string name="password_error">Kata sandi harus lebih dari 5 huruf</string>
+    <string name="email_error">Masukkan email yang valid</string>
+    <string name="input_email">Masukkan email</string>
+    <string name="login">Masuk</string>
+    <string name="have_no_account">Belum punya akun?</string>
+    <string name="register">Buat akun</string>
+    <string name="have_an_account">Sudah punya akun?</string>
+    <string name="empty_field">Kolom ini harus diisi</string>
+    <string name="logout">Keluar</string>
+    <string name="date">13 jam yang lalu</string>
+    <string name="logout_dialog_title">Keluar dari Story App?</string>
+    <string name="logout_yes">Keluar</string>
+    <string name="cancel">Batal</string>
+    <string name="description">Deskripsi</string>
+    <string name="post">Unggah</string>
+    <string name="input_description">Masukkan deskripsi</string>
+    <string name="create_story_title">Tambah Cerita</string>
+    <string name="choose_picture">Pilih Gambar</string>
+    <string name="upload_story_null">Silakan masukkan berkas gambar dan deskripsi terlebih dahulu</string>
+    <string name="retry">Try Again</string>
+    <string name="map">map</string>
 </resources>
